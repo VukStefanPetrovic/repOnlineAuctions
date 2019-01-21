@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<OnlineAuctions.Models.Auction>
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><br /><br />
+
+
+<form class="form-group">
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label>Search by name:</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="byname" placeholder="Search auctions" />
+        </div>
+    </div>
+
+
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label>Min price:</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="minprice" placeholder="Min price..." />
+        </div>
+    </div>
+
+
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label>High price:</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="highprice" placeholder="High price..." />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label>Select state:</label>
+        </div>
+        <div class="col-md-8">
+            <select class="form-control" name="bystate">
+                <option value=""></option>
+                <option value="READY">READY</option>
+                <option value="OPENED">OPENED</option>
+                <option value="COMPLETED">COMPLETED</option>
+            </select>
+        </div>
+    </div>
+
+    <br />
+    
+
+    <div class="row form-group">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+
+<div class="container">
+    <div class="row">
+        @foreach(var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="text-center">@item.Name</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="thumbnail">
+                            @{
+                                string imgurl = "";
+                                if (item.Img != null)
+                                {
+                                    string imreBase64Data = Convert.ToBase64String(item.Img);
+                                    imgurl = string.Format("data:image/png;base64,{0}", imreBase64Data);
+                                }
+                            }
+
+                            <img src="@imgurl" style="width:150px;height:150px" />
+                        </div>
+                        @{ 
+                            String time = "00:00:00";
+                        }
+                        <div class="text-lg-center" style="color:red">@time</div>
+                        <div class="text-md-center" style="color:darkseagreen">@item.currentPrice</div>
+                        <div class="text-sm-center" style="color:lightgray">User blablabnla</div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-warning btn-lg">Bid</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
